@@ -1,0 +1,53 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isDoctor() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/doctors/$(request.auth.uid));
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+    }
+
+    // Doctors collection
+    match /doctors/{doctorId} {
+      allow read: if isAuthenticated();
+      allow write: if isDoctor() && request.auth.uid == doctorId;
+    }
+
+    // Appointments collection
+    match /appointments/{appointmentId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.patientId ||
+        request.auth.uid == resource.data.doctorId
+      );
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (
+        request.auth.uid == resource.data.patientId ||
+        request.auth.uid == resource.data.doctorId
+      );
+    }
+
+    // Prescriptions collection
+    match /prescriptions/{prescriptionId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.patientId ||
+        request.auth.uid == resource.data.doctorId
+      );
+      allow write: if isDoctor();
+    }
+  }
+} 

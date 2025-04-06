@@ -1,0 +1,34 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isDoctor() {
+      return isAuthenticated() && 
+        exists(/databases/(default)/documents/doctors/$(request.auth.uid));
+    }
+
+    // Prescription PDFs
+    match /prescriptions/{prescriptionId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.metadata.patientId ||
+        request.auth.uid == resource.metadata.doctorId
+      );
+      allow write: if isDoctor() && 
+        request.resource.contentType == 'application/pdf' &&
+        request.resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+
+    // Profile pictures
+    match /profiles/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && request.auth.uid == userId &&
+        request.resource.contentType.matches('image/.*') &&
+        request.resource.size < 2 * 1024 * 1024; // 2MB limit
+    }
+  }
+} 
