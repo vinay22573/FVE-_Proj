@@ -1,100 +1,116 @@
-# ReproMitra - Privacy-First Reproductive Health Consultation Platform
+# ReproMitra - Reproductive Health Consultation Platform
 
-ReproMitra is a full-stack web application that provides confidential reproductive health consultation services to underserved populations. The platform emphasizes privacy through pseudonym-based authentication and secure video consultations.
+ReproMitra is a privacy-focused reproductive health consultation platform that connects patients with specialized doctors through secure video consultations.
 
 ## Features
 
-- 🔒 Privacy-first design with pseudonym-based authentication
-- 📱 Mobile-responsive UI with multi-language support (English, Hindi, Odia, Tamil)
-- 🏥 Doctor directory with language and specialization filters
+- 🔒 Privacy-first approach with pseudonyms
+- 👨‍⚕️ Doctor directory with search and filtering
 - 📅 Appointment booking system
-- 🎥 Secure video consultations using Jitsi Meet
-- 📄 Digital prescriptions with download and print options
-- 👤 User dashboard with appointment history and preferences
-
-## Tech Stack
-
-- Frontend: React + Vite
-- Styling: Tailwind CSS
-- Authentication: Firebase Authentication
-- Database: Firebase Firestore
-- Storage: Firebase Storage
-- Video Calls: Jitsi Meet
-- Hosting: Firebase Hosting
+- 🎥 Secure video consultations
+- 📝 Digital prescriptions
+- 👤 User profile management
+- 🌐 Multi-language support
 
 ## Prerequisites
 
 - Node.js (v14 or higher)
-- npm (v6 or higher)
+- npm or yarn
 - Firebase account
-- Jitsi Meet account (for video calls)
+- Jitsi Meet account (for video consultations)
 
-## Setup Instructions
+## Setup
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/repro-mitra.git
-   cd repro-mitra
-   ```
+```bash
+git clone <repository-url>
+cd repro-mitra
+```
 
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+# or
+yarn install
+```
 
 3. Create a `.env` file in the root directory with your Firebase configuration:
-   ```env
-   VITE_FIREBASE_API_KEY=your_api_key
-   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-   VITE_FIREBASE_PROJECT_ID=your_project_id
-   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-   VITE_FIREBASE_APP_ID=your_app_id
-   ```
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_JITSI_DOMAIN=your_jitsi_domain
+```
 
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+4. Set up Firebase:
+   - Create a new Firebase project
+   - Enable Authentication (Email/Password and Google)
+   - Create a Firestore database
+   - Set up Storage for prescription files
+   - Update security rules in Firebase Console
 
-5. Build for production:
-   ```bash
-   npm run build
-   ```
+5. Set up Jitsi Meet:
+   - Create a Jitsi Meet account
+   - Configure your domain
+   - Update the Jitsi domain in your `.env` file
 
-## Firebase Setup
+## Running the Project
 
-1. Create a new Firebase project
-2. Enable Authentication with Phone Number provider
-3. Create Firestore database with the following collections:
-   - users
-   - doctors
-   - appointments
-   - prescriptions
-4. Set up Firebase Storage for prescription PDFs
-5. Deploy security rules from the `firebase` directory
+1. Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-## Jitsi Meet Setup
+2. Open your browser and navigate to:
+```
+http://localhost:5173
+```
 
-1. Create a Jitsi Meet account
-2. Configure your Jitsi Meet domain in the video call component
-3. Set up custom branding and security settings
+## Building for Production
+
+1. Build the project:
+```bash
+npm run build
+# or
+yarn build
+```
+
+2. Preview the production build:
+```bash
+npm run preview
+# or
+yarn preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── contexts/       # React contexts
+├── pages/          # Page components
+├── utils/          # Utility functions
+├── firebase.js     # Firebase configuration
+└── App.jsx         # Main application component
+```
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## Support
 
-- Ayushmaan Bharat for healthcare integration
-- Jitsi Meet for video consultation infrastructure
-- Firebase for backend services
-- React and Vite communities for frontend tools 
+For support, email support@repromitra.com or open an issue in the repository. 
